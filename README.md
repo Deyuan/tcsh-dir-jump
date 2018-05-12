@@ -1,14 +1,32 @@
 # tcsh-dir-jump
 A handy directory-jump utility in tcsh
 
-Tcsh is an improved version of C shell, which is still available in Mac OS X
+## Description
+Tcsh is an improved version of C shell, which is available in Mac OS X
 and Red Hat Linux. The source code of tcsh can be found at:
-> https://github.com/tcsh-org/tcsh
+> TCSH github repo: https://github.com/tcsh-org/tcsh
+
+It is known that C shell has some drawbacks. But it is still being used
+in some production environment.
+> Top Ten Reasons not to use the C shell: http://www.grymoire.com/unix/CshTop10.txt
 
 This directory-jump utility is implemented with aliases based on pushd and
 dirs commands. It provides a shortcut 'j' to show cd history and 'j #id' to
 jump among history directories. This is helpful to boost productivity while
 working on multiple directories simultaneously.
+
+## Alias-based Implementation
+TCSH does not support single line if-else statement. However, we can
+achieve this by chaining multiple if statements separated by semicolons.
+Directories are sorted by absolute path for ease of use.
+```
+# Add the following to .cshrc and enjoy
+set dunique
+set pushdsilent
+set pushdtohome
+alias cd 'pushd'
+alias j  'if (`expr "\!*"` == "") dirs -v | sort -k 2; if (`expr "\!*"` > 0) pushd +\!*'
+```
 
 ## Usage
 ```
