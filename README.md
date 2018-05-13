@@ -3,22 +3,22 @@ A handy directory-jump utility in tcsh
 
 ## Description
 Tcsh is an improved version of C shell, which is available in Mac OS X
-and Red Hat Linux. The source code of tcsh can be found at:
-> TCSH github repo: https://github.com/tcsh-org/tcsh
+and Red Hat Linux. Tcsh might not be as popular as other shells such as bash,
+but it is still being used in some production environments. 
 
-It is known that C shell has some drawbacks. But it is still being used
-in some production environment.
-> Top Ten Reasons not to use the C shell: http://www.grymoire.com/unix/CshTop10.txt
-
-This directory-jump utility is implemented with aliases based on pushd and
-dirs commands. It provides a shortcut 'j' to show cd history and 'j #id' to
+This directory-jump utility is implemented with aliases based on `pushd` and
+`dirs` commands. It provides a shortcut `j` to show cd history and `j #id` to
 jump among history directories. This is helpful to boost productivity while
-working on multiple directories simultaneously.
+working on multiple directories simultaneously and jumping among them frequently.
 
 ## Alias-based Implementation
 TCSH does not support single line if-else statement. However, we can
 achieve this by chaining multiple if statements separated by semicolons.
+
+The `dunique`, `pushdsilent` and `pushdtohome` are built-in shell variables
+in tcsh to make `pushd` act more like `cd`.
 Directories are sorted by absolute path for ease of use.
+
 ```
 # Add the following to .cshrc and enjoy
 set dunique
@@ -29,6 +29,7 @@ alias j  'if (`expr "\!*"` == "") dirs -v | sort -k 2; if (`expr "\!*"` > 0) pus
 ```
 
 ## Usage
+The general use model is to use `j` to show a list of directories, and use `j #id` to jump to one of them.
 ```
 cd      : Use as usual
 j       : Show the list of currently remembered directories
@@ -50,3 +51,12 @@ dirs -c : Clear the directory list
 ~/dir1
 ```
 
+## References
+* Tcsh github repo
+  > https://github.com/tcsh-org/tcsh
+* Special shell variables for tcsh
+  > https://nature.berkeley.edu/~casterln/tcsh/Special_shell_variables.html
+* Tcsh Wikipedia
+  > https://en.wikipedia.org/wiki/Tcsh
+* Top ten reasons not to use the C shell
+  > http://www.grymoire.com/unix/CshTop10.txt
